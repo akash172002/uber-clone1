@@ -71,3 +71,27 @@ This endpoint is used to log in an existing user. It validates the provided emai
   }
 }
 ```
+
+## /user/logout Endpoint Documentation
+
+### Description
+
+This endpoint logs out an authenticated user by invalidating the current session or token.
+
+### Method
+
+GET
+
+### Authentication
+
+Requires an authentication token in the request.
+
+### Response
+
+- 200 OK: Logout successful.
+
+```json
+{
+  "message": "Logout successful"
+}
+```
