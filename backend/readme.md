@@ -38,17 +38,75 @@ The following data is required in the request body (JSON format):
 }
 ```
 
-# /captain/register Endpoint Documentation
+## /user/login Endpoint Documentation
 
-## Description
+### Description
+
+This endpoint is used to log in an existing user. It validates the provided email and password, and returns an authentication token along with user information upon a successful login.
+
+### Required Data
+
+- `email`: User's email address (string, required).
+- `password`: User's password (string, required).
+
+### Status Codes
+
+- `200 OK`: User successfully logged in and token is returned.
+- `400 Bad Request`: Invalid data provided in the request body.
+- `401 Unauthorized`: Invalid email or password.
+- `500 Internal Server Error`: An unexpected error occurred on the server.
+
+### Example Response
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "fullname": {
+      "firstname": "test",
+      "lastname": "test"
+    },
+    "email": "test@gmail.com",
+    "_id": "64fb7906287e8958642e5369"
+  }
+}
+```
+
+## /user/logout Endpoint Documentation
+
+### Description
+
+This endpoint logs out an authenticated user by invalidating the current session or token.
+
+### Method
+
+GET
+
+### Authentication
+
+Requires an authentication token in the request.
+
+### Response
+
+- 200 OK: Logout successful.
+
+```json
+{
+  "message": "Logout successful"
+}
+```
+
+## /captain/register Endpoint Documentation
+
+### Description
 
 This endpoint is used to register a new captain in the system. It requires specific captain and vehicle details to create an account.
 
-## Method
+### Method
 
 `POST`
 
-## Required Data
+### Required Data
 
 The following data is required in the request body (JSON format):
 
@@ -63,14 +121,14 @@ The following data is required in the request body (JSON format):
   - `capacity` (integer, required, minimum 1)
   - `vehicleType` (string, required, must be one of: `"car"`, `"motorcycle"`, `"auto"`)
 
-## Status Codes
+### Status Codes
 
 - `201 Created`: Captain successfully registered.
 - `400 Bad Request`: Invalid data provided in the request body.
 - `409 Conflict`: Email address already exists.
 - `500 Internal Server Error`: An unexpected error occurred on the server.
 
-## Example Request
+### Example Request
 
 ```json
 {
@@ -89,7 +147,7 @@ The following data is required in the request body (JSON format):
 }
 ```
 
-## Example Response
+### Example Response
 
 ```json
 {
