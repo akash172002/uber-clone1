@@ -38,60 +38,75 @@ The following data is required in the request body (JSON format):
 }
 ```
 
-## /user/login Endpoint Documentation
+# /captain/register Endpoint Documentation
 
-### Description
+## Description
 
-This endpoint is used to log in an existing user. It validates the provided email and password, and returns an authentication token along with user information upon a successful login.
+This endpoint is used to register a new captain in the system. It requires specific captain and vehicle details to create an account.
 
-### Required Data
+## Method
 
-- `email`: User's email address (string, required).
-- `password`: User's password (string, required).
+`POST`
 
-### Status Codes
+## Required Data
 
-- `200 OK`: User successfully logged in and token is returned.
+The following data is required in the request body (JSON format):
+
+- `fullname`:
+  - `firstname` (string, required, minimum 3 characters)
+  - `lastname` (string, optional, minimum 3 characters)
+- `email` (string, required, must be unique and valid)
+- `password` (string, required, minimum 3 characters)
+- `vehicle`:
+  - `color` (string, required, minimum 3 characters)
+  - `plate` (string, required, minimum 3 characters)
+  - `capacity` (integer, required, minimum 1)
+  - `vehicleType` (string, required, must be one of: `"car"`, `"motorcycle"`, `"auto"`)
+
+## Status Codes
+
+- `201 Created`: Captain successfully registered.
 - `400 Bad Request`: Invalid data provided in the request body.
-- `401 Unauthorized`: Invalid email or password.
+- `409 Conflict`: Email address already exists.
 - `500 Internal Server Error`: An unexpected error occurred on the server.
 
-### Example Response
+## Example Request
 
 ```json
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "user": {
-    "fullname": {
-      "firstname": "test",
-      "lastname": "test"
-    },
-    "email": "test@gmail.com",
-    "_id": "64fb7906287e8958642e5369"
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com",
+  "password": "securepassword",
+  "vehicle": {
+    "color": "Blue",
+    "plate": "XYZ123",
+    "capacity": 4,
+    "vehicleType": "car"
   }
 }
 ```
 
-## /user/logout Endpoint Documentation
-
-### Description
-
-This endpoint logs out an authenticated user by invalidating the current session or token.
-
-### Method
-
-GET
-
-### Authentication
-
-Requires an authentication token in the request.
-
-### Response
-
-- 200 OK: Logout successful.
+## Example Response
 
 ```json
 {
-  "message": "Logout successful"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "captain": {
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "_id": "64fb7906287e8958642e5369",
+    "vehicle": {
+      "color": "Blue",
+      "plate": "XYZ123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
 }
 ```
