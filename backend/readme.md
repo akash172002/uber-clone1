@@ -26,40 +26,6 @@ The following data is required in the request body (JSON format):
 
 ```json
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGZiNzkwNjI4N2U4OTU4NjQyZTUzNjkiLCJpYXQiOjE2OTQxNjU4OTR9.xJwrvj9W-V9jEqvJ9K9JgH-M0q7jV9HhK-V3qJqJ1_E",
-  "user": {
-    "fullname": {
-      "firstname": "test",
-      "lastname": "test"
-    },
-    "email": "test@gmail.com",
-    "_id": "64fb7906287e8958642e5369"
-  }
-}
-```
-
-## /user/login Endpoint Documentation
-
-### Description
-
-This endpoint is used to log in an existing user. It validates the provided email and password, and returns an authentication token along with user information upon a successful login.
-
-### Required Data
-
-- `email`: User's email address (string, required).
-- `password`: User's password (string, required).
-
-### Status Codes
-
-- `200 OK`: User successfully logged in and token is returned.
-- `400 Bad Request`: Invalid data provided in the request body.
-- `401 Unauthorized`: Invalid email or password.
-- `500 Internal Server Error`: An unexpected error occurred on the server.
-
-### Example Response
-
-```json
-{
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "user": {
     "fullname": {
@@ -72,15 +38,53 @@ This endpoint is used to log in an existing user. It validates the provided emai
 }
 ```
 
-## /user/logout Endpoint Documentation
+## /captain/login Endpoint Documentation
 
 ### Description
 
-This endpoint logs out an authenticated user by invalidating the current session or token.
+This endpoint is used to log in an existing captain. It validates the provided email and password, and returns an authentication token along with captain information upon a successful login.
 
 ### Method
 
-GET
+`POST`
+
+### Required Data
+
+- `email`: Captain's email address (string, required).
+- `password`: Captain's password (string, required, minimum 3 characters).
+
+### Status Codes
+
+- `200 OK`: Captain successfully logged in and token is returned.
+- `400 Bad Request`: Invalid data provided in the request body.
+- `401 Unauthorized`: Invalid email or password.
+- `500 Internal Server Error`: An unexpected error occurred on the server.
+
+### Example Response
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "captain": {
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "_id": "64fb7906287e8958642e5369"
+  }
+}
+```
+
+## /captain/logout Endpoint Documentation
+
+### Description
+
+This endpoint logs out an authenticated captain by invalidating the current session or token.
+
+### Method
+
+`GET`
 
 ### Authentication
 
@@ -88,11 +92,48 @@ Requires an authentication token in the request.
 
 ### Response
 
-- 200 OK: Logout successful.
+- `200 OK`: Logout successful.
 
 ```json
 {
   "message": "Logout successful"
+}
+```
+
+## /captain/profile Endpoint Documentation
+
+### Description
+
+This endpoint retrieves the profile of the authenticated captain.
+
+### Method
+
+`GET`
+
+### Authentication
+
+Requires an authentication token in the request.
+
+### Response
+
+- `200 OK`: Captain profile retrieved successfully.
+
+```json
+{
+  "captain": {
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "_id": "64fb7906287e8958642e5369",
+    "vehicle": {
+      "color": "Blue",
+      "plate": "XYZ123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
 }
 ```
 
